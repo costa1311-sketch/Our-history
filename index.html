@@ -2,97 +2,138 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Para mi persona favorita</title>
+    <title>Nuestra Historia</title>
     <style>
         body { 
-            background: #fff5f8; 
-            font-family: 'Segoe UI', sans-serif; 
+            background: #fffafa; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             min-height: 100vh; 
             margin: 0; 
             overflow: hidden; 
-            color: #d63384; 
+            color: #b33a5d; 
         }
 
-        /* Contenedor principal para organizar izquierda/derecha */
         .container {
             display: flex;
-            width: 80%;
+            width: 90%;
+            max-width: 1000px;
             justify-content: space-around;
             align-items: center;
+            flex-wrap: wrap;
         }
 
-        /* --- LA FLOR CON ANIMACIÓN DE ENTRADA --- */
-        .flower { 
-            position: relative; 
-            animation: 
-                intro-flower 2s ease-in-out forwards, /* Se mueve al lado */
-                float 3s ease-in-out infinite 2s;    /* Flota después de moverse */
+        /* --- FLOR MEJORADA --- */
+        .flower-container {
+            position: relative;
+            animation: intro-flower 2.5s ease-in-out forwards;
+        }
+
+        .flower { position: relative; animation: float 4s ease-in-out infinite; }
+
+        /* Capas de pétalos */
+        .petal { 
+            width: 45px; height: 75px; 
+            background: #ff85a2; 
+            position: absolute; 
+            border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%; 
+            transform-origin: bottom center;
+            box-shadow: inset 0 0 15px rgba(214, 51, 132, 0.3);
         }
         
-        .petal { width: 50px; height: 80px; background: #ff85a2; position: absolute; border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%; transform-origin: bottom center; }
-        .center { width: 40px; height: 40px; background: #ffd93d; border-radius: 50%; position: relative; z-index: 10; margin-top: 60px; }
+        /* Pétalos internos más oscuros para profundidad */
+        .petal.inner { width: 35px; height: 60px; background: #f06292; z-index: 5; bottom: 0; }
+
+        .center { 
+            width: 35px; height: 35px; background: #ffd93d; 
+            border-radius: 50%; position: relative; z-index: 10; 
+            top: 55px; left: 5px;
+            box-shadow: 0 0 10px rgba(255, 217, 61, 0.8);
+        }
+
+        /* Tallo y hoja */
+        .stem { width: 6px; height: 120px; background: #8bc34a; position: absolute; top: 120px; left: 20px; border-radius: 3px; }
+        .leaf { 
+            width: 30px; height: 15px; background: #8bc34a; 
+            position: absolute; border-radius: 0 15px 0 15px;
+            top: 150px; left: 25px; transform: rotate(-20deg);
+        }
+
+        /* Posiciones de pétalos */
         .p1 { transform: rotate(0deg); } .p2 { transform: rotate(72deg); } .p3 { transform: rotate(144deg); }
         .p4 { transform: rotate(216deg); } .p5 { transform: rotate(288deg); }
 
-        /* --- LOS CONTADORES CON APARICIÓN TARDÍA --- */
+        /* --- CONTADORES --- */
         .counters { 
             text-align: center; 
             opacity: 0; 
-            animation: fadeIn 1.5s ease-in-out forwards 2.5s; /* Aparece después de la flor */
+            animation: fadeIn 2s ease-in-out forwards 2.5s; 
         }
         
-        .timer-box { background: white; padding: 20px; border-radius: 15px; margin: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #ffdae0; min-width: 250px; }
-        .timer-box h2 { font-size: 1rem; margin-bottom: 10px; color: #ff4d6d; }
-        .time-display { font-family: monospace; font-size: 1.2rem; font-weight: bold; }
+        .timer-box { 
+            background: white; padding: 25px; border-radius: 20px; 
+            margin: 15px; box-shadow: 0 10px 25px rgba(255, 133, 162, 0.2); 
+            border: 1px solid #ffdae0; min-width: 280px; 
+        }
+        .timer-box h2 { font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; color: #d81b60; }
+        .time-display { font-family: 'Courier New', Courier, monospace; font-size: 1.4rem; font-weight: bold; }
 
         /* --- ANIMACIONES --- */
         @keyframes intro-flower {
-            0% { transform: translateX(50vw); } /* Empieza centrada (aprox) */
-            100% { transform: translateX(0); }  /* Se queda a la izquierda */
+            0% { transform: translateX(35vw) scale(1.2); }
+            100% { transform: translateX(0) scale(1); }
         }
 
         @keyframes float { 
-            0%, 100% { transform: translateY(0); } 
-            50% { transform: translateY(-15px); } 
+            0%, 100% { transform: translateY(0) rotate(0deg); } 
+            50% { transform: translateY(-20px) rotate(2deg); } 
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Izquierda -->
-        <div class="flower">
-            <div class="center"></div>
-            <div class="petal p1"></div><div class="petal p2"></div>
-            <div class="petal p3"></div><div class="petal p4"></div>
-            <div class="petal p5"></div>
+        <div class="flower-container">
+            <div class="flower">
+                <div class="center"></div>
+                <!-- Pétalos exteriores -->
+                <div class="petal p1"></div><div class="petal p2"></div>
+                <div class="petal p3"></div><div class="petal p4"></div>
+                <div class="petal p5"></div>
+                <!-- Pétalos interiores -->
+                <div class="petal inner p1" style="bottom: 5px; left: 5px;"></div>
+                <div class="petal inner p2" style="bottom: 5px; left: 5px;"></div>
+                <div class="petal inner p3" style="bottom: 5px; left: 5px;"></div>
+                <div class="petal inner p4" style="bottom: 5px; left: 5px;"></div>
+                <div class="petal inner p5" style="bottom: 5px; left: 5px;"></div>
+                <div class="stem"></div>
+                <div class="leaf"></div>
+            </div>
         </div>
 
-        <!-- Derecha -->
         <div class="counters">
             <div class="timer-box">
                 <h2>✨ Nuestro primer beso</h2>
-                <div id="timer-beso" class="time-display">00d 00h 00m 00s</div>
+                <div id="timer-beso" class="time-display">...</div>
             </div>
             <div class="timer-box">
-                <h2>❤️ Desde que somos novios</h2>
-                <div id="timer-novios" class="time-display">00d 00h 00m 00s</div>
+                <h2>❤️ El inicio de nuestro "Nosotros"</h2>
+                <div id="timer-novios" class="time-display">...</div>
             </div>
         </div>
     </div>
 
     <script>
-        // RECUERDA AJUSTAR TUS FECHAS AQUÍ (Año, Mes-1, Día, Hora, Minutos)
-        const fechaBeso = new Date(2023, 5, 28, 0, 0, 0); 
-        const fechaNovios = new Date(2023, 9, 10, 0, 0, 0); 
+        // FECHAS CONFIGURADAS (Meses en JS: Enero=0, Junio=5, Octubre=9)
+        const fechaBeso = new Date(2024, 5, 28, 0, 0, 0); 
+        const fechaNovios = new Date(2024, 9, 10, 0, 0, 0); 
 
         function updateTimers() {
             const now = new Date();
