@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Para mi persona favorita</title>
+    <style>
+        body { background: #fff5f8; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; color: #d63384; }
+        
+        /* --- LA FLOR (Simplificada en CSS) --- */
+        .flower { position: relative; margin: 50px 0; animation: float 3s ease-in-out infinite; }
+        .petal { width: 50px; height: 80px; background: #ff85a2; position: absolute; border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%; transform-origin: bottom center; }
+        .center { width: 40px; height: 40px; background: #ffd93d; border-radius: 50%; position: relative; z-index: 10; margin-top: 60px; }
+        /* Posicionando pétalos */
+        .p1 { transform: rotate(0deg); } .p2 { transform: rotate(72deg); } .p3 { transform: rotate(144deg); }
+        .p4 { transform: rotate(216deg); } .p5 { transform: rotate(288deg); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* --- LOS CRONÓMETROS --- */
+        .counters { text-align: center; max-width: 90%; }
+        .timer-box { background: white; padding: 20px; border-radius: 15px; margin: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #ffdae0; }
+        .timer-box h2 { font-size: 1.1rem; margin-bottom: 10px; color: #ff4d6d; }
+        .time-display { font-family: monospace; font-size: 1.3rem; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="flower">
+        <div class="center"></div>
+        <div class="petal p1"></div><div class="petal p2"></div>
+        <div class="petal p3"></div><div class="petal p4"></div>
+        <div class="petal p5"></div>
+    </div>
+
+    <div class="counters">
+        <div class="timer-box">
+            <h2>✨ Desde nuestro primer beso</h2>
+            <div id="timer-beso" class="time-display">Calculando...</div>
+        </div>
+        <div class="timer-box">
+            <h2>❤️ Desde que somos novios</h2>
+            <div id="timer-novios" class="time-display">Calculando...</div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURA TUS FECHAS AQUÍ (Año, Mes-1, Día, Hora, Minutos)
+        // Nota: El mes empieza en 0 (Enero es 0, Febrero es 1, etc.)
+        const fechaBeso = new Date(2024, 5, 28, 0, 0, 0); // Ejemplo: 15 de Junio, 10:30 PM
+        const fechaNovios = new Date(2023, 9, 10, 0, 0, 0); // Ejemplo: 20 de Agosto, 6:00 PM
+
+        function updateTimers() {
+            const now = new Date();
+            
+            function calculate(start) {
+                const diff = now - start;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+                return `${d}d ${h}h ${m}m ${s}s`;
+            }
+
+            document.getElementById('timer-beso').innerText = calculate(fechaBeso);
+            document.getElementById('timer-novios').innerText = calculate(fechaNovios);
+        }
+
+        setInterval(updateTimers, 1000);
+        updateTimers();
+    </script>
+</body>
+</html>
